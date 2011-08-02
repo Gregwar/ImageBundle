@@ -1,0 +1,15 @@
+
+# Services
+services:
+    # Image handling factory
+    image.handling:
+        class: Gregwar\ImageBundle\Services\ImageHandling
+        arguments: [%gregwar_image.cache_dir%, @service_container]
+
+    # Helper Twig
+    twig.extension.image:
+        class: Gregwar\ImageBundle\Extensions\ImageTwig
+        arguments: [%kernel.root_dir%, @service_container]
+        tags:
+            - { name: twig.extension }
+
