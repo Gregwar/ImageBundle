@@ -2,6 +2,8 @@
 
 namespace Gregwar\ImageBundle;
 
+use Gregwar\Image;
+
 /**
  * Image manipulation class
  *

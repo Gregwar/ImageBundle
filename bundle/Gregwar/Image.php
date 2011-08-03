@@ -1,6 +1,7 @@
 <?php
+namespace Gregwar;
 
-namespace Gregwar\ImageBundle;
+require_once ('ImageColor.php');
 
 /**
  * Images handling class
@@ -27,7 +28,13 @@ class Image
     /**
      * File
      */
-    protected $file = '';
+    protected $file = null;
+
+    /**
+     * Dimensions for new resources
+     */
+    protected $width = null;
+    protected $height = null;
 
     /**
      * Supported types
@@ -52,34 +59,35 @@ class Image
      */
     protected $operations = array();
 
-    public function __construct($originalFile = '')
+    public function __construct($originalFile = null, $width = null, $height = null)
     {
         $this->file = $originalFile;
+        $this->width = $width;
+        $this->height = $height;
     }
 
     /**
-     * Create and returns the absolute directory for a file
+     * Create and returns the absolute directory for a hash
      *
-     * @param string $file the file name
+     * @param string $hash the hash
      *
      * @return string the full file name
      */
-    public function file($file) {
+    public function generateFileFromhash($hash) {
         $directory = $this->cacheDir;
 
         if (!file_exists($directory))
             mkdir($directory); 
 
         for ($i=0; $i<5; $i++) {
-            $c = $file[$i];
-            $directory.='/'.$c;
+            $c = $hash[$i];
+            $directory .= '/'.$c;
             if (!file_exists($directory)) {
                 mkdir($directory);
             }
         }
 
-        $file = $directory.'/'.substr($file,5);
-        return $file;
+        return $directory.'/'.substr($hash,5);
     }
 
     /**
@@ -139,25 +147,29 @@ class Image
     /**
      * Try to open the file
      */
-    public function openFile()
+    public function initGd()
     {
-        if (null === $this->gd) {
-            $type = $this->guessType();
-
-            if ($type == 'jpeg')
-                $this->openJpeg();
-
-            if ($type == 'gif')
-                $this->openGif();
-
-            if ($type == 'png')
-                $this->openPng();
-        }
-
-        if (null === $this->gd) {
-            throw new \UnexpectedValueException('Unable to open file ('.$this->file.')');
+        if (null === $this->file) {
+            $this->gd = imagecreatetruecolor($this->width, $this->height);
         } else {
-            $this->convertToTrueColor();
+            if (null === $this->gd) {
+                $type = $this->guessType();
+
+                if ($type == 'jpeg')
+                    $this->openJpeg();
+
+                if ($type == 'gif')
+                    $this->openGif();
+
+                if ($type == 'png')
+                    $this->openPng();
+            }
+
+            if (null === $this->gd) {
+                throw new \UnexpectedValueException('Unable to open file ('.$this->file.')');
+            } else {
+                $this->convertToTrueColor();
+            }
         }
 
         return $this;
@@ -426,7 +438,7 @@ class Image
     protected function _merge(Image $other, $x = 0, $y = 0, $w = null, $h = null)
     {
         $other = clone $other;
-        $other->openFile();
+        $other->initGd();
         $other->applyOperations();
 
         if (null == $w)
@@ -435,7 +447,7 @@ class Image
         if (null == $y)
             $h = $other->height();
 
-        imagecopyresized($this->gd, $other->gd, $x, $y, 0, 0, $w, $h, $w, $h);
+        imagecopyresampled($this->gd, $other->gd, $x, $y, 0, 0, $w, $h, $w, $h);
     }
 
     /**
@@ -444,6 +456,49 @@ class Image
     protected function _rotate($angle, $background = 0xffffff)
     {
         $this->gd = imagerotate($this->gd, $angle, $background);
+    }
+
+    /**
+     * Fills the image
+     */
+    protected function _fill($color = 0xffffff, $x = 0, $y = 0)
+    {
+        imagefill($this->gd, $x, $y, ImageColor::parse($color));
+    }
+
+    /**
+     * Writes some text
+     */
+    protected function _write($font, $text, $x = 0, $y = 0, $size = 12, $angle = 0, $color = 0x000000, $pos = 'left')
+    {
+        if ($pos != 'left') {
+            $box = imagettfbbox($size, $angle, $font, $text);
+
+            $w = $box[2] - $box[0];
+            $h = $box[5] - $box[3];
+
+            if ($pos == 'center') {
+                $x -= $w / 2;
+                $y -= $h / 2;
+            } 
+            if ($pos == 'right') {
+                $x -= $w;
+                $y -= $h;
+            }
+        }
+        imagettftext($this->gd, $size, $angle, $x, $y, ImageColor::parse($color), $font, $text);
+    }
+
+    /**
+     * Draw a rectangle
+     */
+    protected function _rectangle($color, $x1, $y1, $x2, $y2, $filled = false)
+    {
+        if ($filled) {
+            imagefilledrectangle($this->gd, $x1, $y1, $x2, $y2, ImageColor::parse($color));
+        } else {
+            imagerectangle($this->gd, $x1, $y1, $x2, $y2, ImageColor::parse($color));
+        }
     }
 
     /**
@@ -508,7 +563,7 @@ class Image
         $this->hash = $this->getHash($type, $quality);
 
         // Generates the cache file
-        $file = $this->file($this->hash.'.'.$type);
+        $file = $this->generateFileFromHash($this->hash.'.'.$type);
 
         // If the files does not exists, save it
         if (!file_exists($file)) {
@@ -566,12 +621,17 @@ class Image
      */
     public function save($file, $type = 'jpeg', $quality = 80)
     {
+        if (is_int($type)) {
+            $quality = $type;
+            $type = 'jpeg';
+        }
+
         if (!isset(self::$types[$type]))
             throw new \InvalidArgumentException('Given type ('.$type.') is not valid');
 
         $type = self::$types[$type];
 
-        $this->openFile();
+        $this->initGd();
 
         $this->applyOperations();
 
@@ -599,7 +659,9 @@ class Image
      */
     public function width()
     {
-        $this->openFile();
+        if (null === $this->gd)
+            $this->initGd();
+
         return imagesx($this->gd);
     }
 
@@ -608,7 +670,9 @@ class Image
      */
     public function height()
     {
-        $this->openFile();
+        if (null === $this->gd)
+            $this->initGd();
+
         return imagesy($this->gd);
     }
 
@@ -621,11 +685,19 @@ class Image
     }
 
     /**
-     * Create an instance, usefull for one-line chaining
+     * Creates an instance, usefull for one-line chaining
      */
     public static function open($file = '')
     {
         return new Image($file);
+    }
+
+    /**
+     * Creates an instance of a new resource
+     */
+    public static function create($width, $height)
+    {
+        return new Image(null, $width, $height);
     }
 }
 
