@@ -9,7 +9,7 @@ services:
     # Helper Twig
     twig.extension.image:
         class: Gregwar\ImageBundle\Extensions\ImageTwig
-        arguments: [%kernel.root_dir%, @service_container]
+        arguments: [@service_container]
         tags:
             - { name: twig.extension }
 

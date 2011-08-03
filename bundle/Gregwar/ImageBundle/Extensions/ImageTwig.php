@@ -16,11 +16,9 @@ class ImageTwig extends \Twig_Extension
 {
     private $container;
     private $environment;
-    private $dir;
 
-    public function __construct($root_dir, ContainerInterface $container)
+    public function __construct(ContainerInterface $container)
     {
-        $this->dir = $root_dir.'/web/';
         $this->container = $container;
     }
     
