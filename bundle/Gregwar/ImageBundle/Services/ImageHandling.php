@@ -28,19 +28,19 @@ class ImageHandling
      *
      * @return object a manipulable image instance
      */
-    public function open($file)
+    public function open($file, $ext = null)
     {
-        return $this->createInstance($file);
+        return $this->createInstance($file, $ext);
     }
 
     /**
      * Creates an instance defining the cache directory
      */
-    private function createInstance($file)
+    private function createInstance($file, $ext = null)
     {
         $asset = $this->container->get('templating.helper.assets');
 
-        $image = new ImageHandler($file);
+        $image = new ImageHandler($file, $ext);
 
         $image->setCacheDir($this->cache_dir);
 

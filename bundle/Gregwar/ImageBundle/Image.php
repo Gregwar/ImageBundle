@@ -40,6 +40,11 @@ class Image
     );
 
     /**
+     * Force extension
+     */
+    protected $ext = null;
+
+    /**
      * Change the caching directory
      */
     public function setCacheDir($cacheDir)
@@ -52,9 +57,10 @@ class Image
      */
     protected $operations = array();
 
-    public function __construct($originalFile = '')
+    public function __construct($originalFile = '', $ext = null)
     {
         $this->file = $originalFile;
+        $this->ext = strtolower($ext);
     }
 
     /**
@@ -98,8 +104,12 @@ class Image
      */
     protected function guessType()
     {
-        $parts = explode('.', $this->file);
-        $ext = strtolower($parts[count($parts)-1]);
+        if (null !== $this->ext) {
+            $ext = $this->ext;
+        } else {
+            $parts = explode('.', $this->file);
+            $ext = strtolower($parts[count($parts)-1]);
+        }
 
         if (isset(self::$types[$ext]))
             return self::$types[$ext];
@@ -144,7 +154,7 @@ class Image
         }
 
         if (null === $this->gd) {
-            throw new \Exception('Unable to open file ('.$this->file.')');
+            throw new \UnexpectedValueException('Unable to open file ('.$this->file.')');
         } else {
             $this->convertToTrueColor();
         }
@@ -204,7 +214,7 @@ class Image
             return $this;
         }
 
-        throw new \Exception('Invalid method: '.$func);
+        throw new \BadFunctionCallException('Invalid method: '.$func);
     }
 
     /**
@@ -612,7 +622,7 @@ class Image
     /**
      * Create an instance, usefull for one-line chaining
      */
-    public static function open($file = '')
+    public static function open($file = '', $ext = null)
     {
         return new Image($file);
     }
