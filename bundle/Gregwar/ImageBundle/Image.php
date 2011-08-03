@@ -40,11 +40,6 @@ class Image
     );
 
     /**
-     * Force extension
-     */
-    protected $ext = null;
-
-    /**
      * Change the caching directory
      */
     public function setCacheDir($cacheDir)
@@ -57,10 +52,9 @@ class Image
      */
     protected $operations = array();
 
-    public function __construct($originalFile = '', $ext = null)
+    public function __construct($originalFile = '')
     {
         $this->file = $originalFile;
-        $this->ext = strtolower($ext);
     }
 
     /**
@@ -104,12 +98,20 @@ class Image
      */
     protected function guessType()
     {
-        if (null !== $this->ext) {
-            $ext = $this->ext;
-        } else {
-            $parts = explode('.', $this->file);
-            $ext = strtolower($parts[count($parts)-1]);
+        $infos = @getimagesize($this->file);
+
+        if ($infos !== false) {
+            $type = $infos[2];
+            if ($type == IMAGETYPE_JPEG)
+                return 'jpeg';
+            if ($type == IMAGETYPE_GIF)
+                return 'gif';
+            if ($type == IMAGETYPE_PNG)
+                return 'png';
         }
+
+        $parts = explode('.', $this->file);
+        $ext = strtolower($parts[count($parts)-1]);
 
         if (isset(self::$types[$ext]))
             return self::$types[$ext];
@@ -622,7 +624,7 @@ class Image
     /**
      * Create an instance, usefull for one-line chaining
      */
-    public static function open($file = '', $ext = null)
+    public static function open($file = '')
     {
         return new Image($file);
     }
