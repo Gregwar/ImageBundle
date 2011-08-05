@@ -176,12 +176,13 @@ class Image
 
                 if ($type == 'png')
                     $this->openPng();
-            }
 
-            if (null === $this->gd) {
-                throw new \UnexpectedValueException('Unable to open file ('.$this->file.')');
-            } else {
-                $this->convertToTrueColor();
+                if (null === $this->gd) {
+                    throw new \UnexpectedValueException('Unable to open file ('.$this->file.')');
+                } else {
+                    $this->convertToTrueColor();
+                    imagesavealpha($this->gd, true);
+                }
             }
         }
 
@@ -666,6 +667,9 @@ class Image
 
         $success = false;
 
+        if (null == $file)
+            ob_start();
+
         if ($type == 'jpeg') 
             $success = imagejpeg($this->gd, $file, $quality);
 
@@ -678,7 +682,15 @@ class Image
         if (!$success)
             return false;
 
-        return $file;
+        return (null === $file ? ob_get_clean() : $file);
+    }
+
+    /**
+     * Get the contents of the image
+     */
+    public function get($type = 'jpeg', $quality = 80)
+    {
+        return $this->save(null, $type, $quality);
     }
 
     /* Image API */
