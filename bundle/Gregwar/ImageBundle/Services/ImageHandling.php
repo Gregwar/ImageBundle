@@ -34,13 +34,26 @@ class ImageHandling
     }
 
     /**
+     * Get a new image
+     *
+     * @param $w the width
+     * @param $h the height
+     *
+     * @return object a manipulable image instance
+     */
+    public function create($w, $h)
+    {
+        return $this->createInstance(null, $w, $h);
+    }
+
+    /**
      * Creates an instance defining the cache directory
      */
-    private function createInstance($file)
+    private function createInstance($file, $w = null, $h = null)
     {
         $asset = $this->container->get('templating.helper.assets');
 
-        $image = new ImageHandler($file);
+        $image = new ImageHandler($file, $w, $h);
 
         $image->setCacheDir($this->cache_dir);
 
