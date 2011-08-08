@@ -502,21 +502,29 @@ class Image
         imagealphablending($this->gd, true);
 
         if ($pos != 'left') {
-            $box = imagettfbbox($size, $angle, $font, $text);
-
-            $w = $box[2] - $box[0];
-            $h = $box[5] - $box[3];
+            $sim_size = self::TTFBox($font, $text, $size, $angle);
 
             if ($pos == 'center') {
-                $x -= $w / 2;
-                $y -= $h / 2;
+                $x -= $sim_size['width'] / 2;
             } 
             if ($pos == 'right') {
-                $x -= $w;
-                $y -= $h;
+                $x -= $sim_size['width'];
             }
         }
         imagettftext($this->gd, $size, $angle, $x, $y, ImageColor::parse($color), $font, $text);
+    }
+
+    /**
+     * Gets the width and the height for writing some text
+     */
+    public static function TTFBox($font, $text, $size, $angle = 0) 
+    {
+        $box = imagettfbbox($size, $angle, $font, $text);
+
+        return array(
+            'width' => abs($box[2] - $box[0]),
+            'height' => abs($box[3] - $box[5])
+        );
     }
 
     /**
@@ -542,10 +550,22 @@ class Image
     /**
      * Draws an ellipse
      */
-    protected function _ellipse($cx, $cy, $width, $height, $color = 0x000000)
+    protected function _ellipse($cx, $cy, $width, $height, $color = 0x000000, $filled = false)
     {
-        imageellipse($this->gd, $cx, $cy, $width, $height, ImageColor::parse($color));
+        if ($filled)
+            imagefilledellipse($this->gd, $cx, $cy, $width, $height, ImageColor::parse($color));
+        else
+            imageellipse($this->gd, $cx, $cy, $width, $height, ImageColor::parse($color));
     }
+
+    /**
+     * Draws a circle
+     */
+    protected function _circle($cx, $cy, $r, $color = 0x000000, $filled)
+    {
+        $this->_ellipse($cx, $cy, $r, $r, ImageColor::parse($color), $filled);
+    }
+
 
     /**
      * Serialization of operations
