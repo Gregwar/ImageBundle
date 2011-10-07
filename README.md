@@ -9,7 +9,7 @@ Installation
 To install `GregwarImageBundle`, first adds it to your deps and clone it in your
 vendor directory, then add the namespace to your `app/autoload.php` file:
 
-```
+```php
 <?php
 ...
 'Gregwar' => __DIR__.'/../vendor/gregwar-image/bundle/',
