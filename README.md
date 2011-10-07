@@ -9,19 +9,26 @@ Installation
 To install `GregwarImageBundle`, first adds it to your deps and clone it in your
 vendor directory, then add the namespace to your `app/autoload.php` file:
 
-      'Gregwar' => __DIR__.'/../vendor/gregwar-image/bundle/',
+```
+<?php
+...
+'Gregwar' => __DIR__.'/../vendor/gregwar-image/bundle/',
+```
 
 And registers the bundle in your `app/AppKernel.php`:
 
-    ...
-    public function registerBundles()
-    {
-        $bundles = array(
-            ...
-            new Gregwar\ImageBundle\GregwarImageBundle(),
-            ...
-        );
-    ...
+```php
+<?php
+...
+public function registerBundles()
+{
+    $bundles = array(
+        ...
+        new Gregwar\ImageBundle\GregwarImageBundle(),
+        ...
+    );
+...
+```
 
 Adds the following configuration to your `app/config/config.yml`:
 
@@ -68,10 +75,20 @@ Manipulating Image in Controllers
 The Image Handler is accessible via a service called image.handling. So you can do in your
 controllers:
 
-    $this->get('image.handling')->open('linux.jpg')
-        ->grayscale()
-        ->rotate(12)
-        ->save('out.jpg')
+```php
+<?php
+...
+$this->get('image.handling')->open('linux.jpg')
+    ->grayscale()
+    ->rotate(12)
+    ->save('out.jpg')
+```
+
+Requirements
+============
+
+`GregwarImageBundle` needs [GD](http://php.net/gd)
+and [exif](http://php.net/exif) extension for PHP to be installed on the web server
 
 License
 =======
