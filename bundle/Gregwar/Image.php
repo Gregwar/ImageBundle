@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar\Image;
+namespace Gregwar;
 
 require_once (__DIR__.'/ImageColor.php');
 
