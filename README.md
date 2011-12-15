@@ -6,6 +6,8 @@ Gregwar's ImageBundle
 Installation
 ============
 
+### Step 1: Download the GregwarCaptchaBundle
+
 ***Using the vendors script***
 
 Add the following lines to your `deps` file:
@@ -31,15 +33,19 @@ $ git submodule add git://github.com/Gregwar/ImageBundle.git vendor/bundles/Greg
 $ git submodule update --init
 ```
 
-Then, add it to your `autoload.pp` :
+### Step 2: Configure the Autoloader
+
+Add it to your `autoload.pp` :
 
 ```php
 <?php
 ...
-'Gregwar' => __DIR__.'/../vendor/gregwar-image/bundle/',
+'Gregwar' => __DIR__.'/../vendor/bundles',
 ```
 
-And registers the bundle in your `app/AppKernel.php`:
+### Step 3: Enable the bundle
+
+Registers the bundle in your `app/AppKernel.php`:
 
 ```php
 <?php
@@ -53,6 +59,8 @@ public function registerBundles()
     );
 ...
 ```
+
+### Step 4: Configure the bundle and set up the directories
 
 Adds the following configuration to your `app/config/config.yml`:
 
