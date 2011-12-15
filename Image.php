@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar;
+namespace Gregwar\ImageBundle;
 
 require_once (__DIR__.'/ImageColor.php');
 
@@ -545,7 +545,7 @@ class Image
      */
     protected function _line($x1, $y1, $x2, $y2, $color = 0x000000) 
     {
-        imageline($this->gd, $x1, $y1, $c2, $y2, ImageColor::parse($color));
+        imageline($this->gd, $x1, $y1, $x2, $y2, ImageColor::parse($color));
     }
 
     /**

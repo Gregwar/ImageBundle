@@ -6,8 +6,32 @@ Gregwar's ImageBundle
 Installation
 ============
 
-To install `GregwarImageBundle`, first adds it to your deps and clone it in your
-vendor directory, then add the namespace to your `app/autoload.php` file:
+***Using the vendors script***
+
+Add the following lines to your `deps` file:
+
+```
+    [GregwarImageBundle]
+        git=git://github.com/Gregwar/ImageBundle.git
+        target=/bundles/Gregwar/ImageBundle
+```
+
+Now, run the vendors script to download the bundle:
+
+``` bash
+$ php bin/vendors install
+```
+
+***Using submodules***
+
+If you prefer instead to use git submodules, then run the following:
+
+``` bash
+$ git submodule add git://github.com/Gregwar/ImageBundle.git vendor/bundles/Gregwar/ImageBundle
+$ git submodule update --init
+```
+
+Then, add it to your `autoload.pp` :
 
 ```php
 <?php
