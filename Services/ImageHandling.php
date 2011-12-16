@@ -14,10 +14,12 @@ class ImageHandling
 {
     private $cache_dir;
     private $container;
+    private $handler_class;
 
-    public function __construct($cache_dir, ContainerInterface $container)
+    public function __construct($cache_dir, $handler_class, ContainerInterface $container)
     {
         $this->cache_dir = $cache_dir;
+        $this->handler_class = $handler_class;
         $this->container = $container;
     }
 
@@ -53,7 +55,8 @@ class ImageHandling
     {
         $asset = $this->container->get('templating.helper.assets');
 
-        $image = new ImageHandler($file, $w, $h);
+        $handler_class = $this->handler_class;
+        $image = new $handler_class($file, $w, $h);
 
         $image->setCacheDir($this->cache_dir);
 

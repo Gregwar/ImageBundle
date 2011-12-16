@@ -1,12 +1,13 @@
 
 parameters:
     image.handling.class: Gregwar\ImageBundle\Services\ImageHandling
+    image.handler.class: Gregwar\ImageBundle\ImageHandler
 
 services:
     # Image handling factory
     image.handling:
         class: %image.handling.class%
-        arguments: [%gregwar_image.cache_dir%, @service_container]
+        arguments: [%gregwar_image.cache_dir%, %image.handler.class%, @service_container]
 
     # Helper Twig
     twig.extension.image:

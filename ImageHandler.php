@@ -11,7 +11,7 @@ use Gregwar\ImageBundle\Image;
  */
 class ImageHandler extends Image 
 {
-    private $fileCallback = null;
+    protected $fileCallback = null;
 
     /**
      * Defines the callback to call to compute the new filename
