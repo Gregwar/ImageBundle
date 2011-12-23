@@ -28,7 +28,7 @@ class ImageHandler extends Image
     {
         $callback = $this->fileCallback;
 
-        if (null !== $callback)
+        if (null === $callback)
             return $filename;
 
         return $callback($filename);
