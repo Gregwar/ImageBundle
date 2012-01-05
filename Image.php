@@ -123,7 +123,7 @@ class Image
     /**
      * Guess the file type
      */
-    protected function guessType()
+    public function guessType()
     {
         $type = @exif_imagetype($this->file);
 
