@@ -1,0 +1,25 @@
+{
+    "name": "gregwar/image-bundle",
+    "type": "symfony-bundle",
+    "description": "Image handling bundle",
+    "keywords": ["symfony2", "image"],
+    "homepage": "https://github.com/Gregwar/ImageBundle",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Grégoire Passault",
+            "email": "g.passault@gmail.com",
+            "homepage": "http://www.gregwar.com/"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "ext-gd": "*"
+    },
+    "autoload": {
+        "psr-0": {
+            "Gregwar\\ImageBundle": ""
+        }
+    },
+    "target-dir": "Gregwar/ImageBundle"
+}
