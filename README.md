@@ -33,7 +33,23 @@ $ git submodule add git://github.com/Gregwar/ImageBundle.git vendor/bundles/Greg
 $ git submodule update --init
 ```
 
+***Using Composer***
+
+Add the following to the "require" section of your `composer.json` file:
+
+```
+    "gregwar/image-bundle": "1.0.0"
+```
+
+And update your dependencies
+
+```
+    php composer.phar update
+```
+
 ### Step 2: Configure the Autoloader
+
+If you use composer, you can skip this step.
 
 Add it to your `autoload.pp` :
 
