@@ -11,6 +11,7 @@ use Symfony\Component\Form\FormView;
  * ImageTwig extension
  *
  * @author Gregwar <g.passault@gmail.com>
+ * @author bzikarsky <benjamin.zikarsky@perbility.de>
  */
 class ImageTwig extends \Twig_Extension
 {
@@ -30,13 +31,19 @@ class ImageTwig extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'image' => new \Twig_Function_Method($this, 'image', array('is_safe' => array('html')))
+            'image' => new \Twig_Function_Method($this, 'image', array('is_safe' => array('html'))),
+            'new_image' => new \Twig_Function_Method($this, 'newImage', array('is_safe' => array('html')))
         );
     }
 
     public function image($path)
     {
         return $this->container->get('image.handling')->open($path);
+    }
+    
+    public function newImage($width, $height)
+    {
+        return $this->container->get('image.handling')->create($width, $height);
     }
 
     public function getName()
