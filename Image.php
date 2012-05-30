@@ -567,6 +567,17 @@ class Image
         $this->_ellipse($cx, $cy, $r, $r, ImageColor::parse($color), $filled);
     }
 
+    /**
+     * Draws a polygon
+     */
+    protected function _polygon(array $points, $color, $filled = false)
+    {
+        if ($filled) {
+            imagefilledpolygon($this->gd, $points, count($points)/2, ImageColor::parse($color));
+        } else {
+            imagepolygon($this->gd, $points, count($points)/2, ImageColor::parse($color));
+        }
+    }
 
     /**
      * Serialization of operations
