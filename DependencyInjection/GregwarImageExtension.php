@@ -19,7 +19,10 @@ class GregwarImageExtension extends Extension
     {
         $cacheDir = 'cache';
 
-        $config = $configs[0];
+        $config = array();
+        foreach ($configs as $subConfig) {
+            $config = array_merge($config, $subConfig);
+        }
 
         if (isset($config['cache_dir']))
             $cacheDir = $config['cache_dir'];
