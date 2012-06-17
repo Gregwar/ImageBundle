@@ -6,7 +6,7 @@ Gregwar's ImageBundle
 Installation
 ============
 
-### Step 1: Download the GregwarCaptchaBundle
+### Step 1: Download the GregwarImageBundle
 
 ***Using the vendors script***
 
