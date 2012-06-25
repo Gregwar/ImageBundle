@@ -130,15 +130,18 @@ class Image
      */
     public function guessType()
     {
-        $type = @exif_imagetype($this->file);
-
-        if (false !== $type) {
-            if ($type == IMAGETYPE_JPEG)
-                return 'jpeg';
-            if ($type == IMAGETYPE_GIF)
-                return 'gif';
-            if ($type == IMAGETYPE_PNG)
-                return 'png';
+        if(function_exists("exif_imagetype"))
+        {
+            $type = @exif_imagetype($this->file);
+    
+            if (false !== $type) {
+                if ($type == IMAGETYPE_JPEG)
+                    return 'jpeg';
+                if ($type == IMAGETYPE_GIF)
+                    return 'gif';
+                if ($type == IMAGETYPE_PNG)
+                    return 'png';
+            }
         }
 
         $parts = explode('.', $this->file);
