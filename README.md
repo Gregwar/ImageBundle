@@ -14,7 +14,7 @@ Add the following lines to your `deps` file:
 
 ```
     [GregwarImageBundle]
-        git=git://github.com/Gregwar/ImageBundle.git
+        git=http://github.com/Gregwar/ImageBundle.git
         target=/bundles/Gregwar/ImageBundle
 ```
 
