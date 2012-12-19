@@ -38,8 +38,10 @@ $ git submodule update --init
 Add the following to the "require" section of your `composer.json` file:
 
 ```
-    "gregwar/image-bundle": "1.0.0"
+    "gregwar/image-bundle": "dev-master"
 ```
+
+You can also choose a version number, (tag, commit ...)
 
 And update your dependencies
 
