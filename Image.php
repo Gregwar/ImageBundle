@@ -17,9 +17,19 @@ class Image
     protected $cacheDir = 'cache/images';
 
     /**
-     * GD Ressource
+     * The actual cache dir
+     */
+    protected $actualCacheDir = null;
+
+    /**
+     * GD Rssource
      */
     protected $gd = null;
+
+    /**
+     * User-defined resource
+     */
+    protected $resource = null;
 
     /**
      * Type name
@@ -72,6 +82,14 @@ class Image
     }
 
     /**
+     * The actual cache dir
+     */
+    public function setActualCacheDir($actualCacheDir)
+    {
+        $this->actualCacheDir = $actualCacheDir;
+    }
+
+    /**
      * Operations array
      */
     protected $operations = array();
@@ -97,32 +115,41 @@ class Image
     }
 
     /**
+     * Sets the resource
+     */
+    public function setResource($resource)
+    {
+        $this->resource = $resource;
+    }
+
+    /**
      * Create and returns the absolute directory for a hash
      *
      * @param string $hash the hash
      *
      * @return string the full file name
      */
-    public function generateFileFromhash($hash) {
+    public function generateFileFromHash($hash)
+    {
         $directory = $this->cacheDir;
 
-        if (!file_exists($directory))
-        {
-            mkdir($directory); 
+        if ($this->actualCacheDir === null) {
+            $actualDirectory = $directory;
+        } else {
+            $actualDirectory = $this->actualCacheDir;
         }
 
         for ($i=0; $i<5; $i++)
         {
             $c = $hash[$i];
-            $directory .= '/'.$c;
-
-            if (!file_exists($directory))
-            {
-                mkdir($directory);
-            }
+            $directory .= '/' . $c;
+            $actualDirectory .= '/' . $c;
         }
 
-        return $directory.'/'.substr($hash,5);
+        $file = $directory . '/' . substr($hash, 5);
+        $actualFile = $actualDirectory . '/' . substr($hash, 5);
+
+        return array($actualFile, $file);
     }
 
     /**
@@ -232,7 +259,12 @@ class Image
         {
             if (null === $this->data)
             {
-                $this->gd = imagecreatetruecolor($this->width, $this->height);
+                if (null === $this->resource)
+                {
+                    $this->gd = imagecreatetruecolor($this->width, $this->height);
+                } else {
+                    $this->gd = $this->resource;
+                }
             }
             else
             {
@@ -340,6 +372,42 @@ class Image
         }
 
         throw new \BadFunctionCallException('Invalid method: '.$func);
+    }
+
+    /**
+     * Perform a zoom crop of the image to desired width and height
+     *
+     * @param integer $width  Desired width
+     * @param integer $height Desired height
+     *
+     * @return void
+     */
+    private function _zoomCrop($width, $height, $bg = 0xffffff)
+    {
+        // Calculate the different ratios
+        $originalRatio = imagesx($this->gd) / imagesy($this->gd);
+        $newRatio = $width / $height;
+
+        // Compare ratios
+        if ($originalRatio > $newRatio) {
+            // Original image is wider
+            $newHeight = $height;
+            $newWidth = (int) $height * $originalRatio;
+        } else {
+            // Equal width or smaller
+            $newHeight = (int) $width / $originalRatio;
+            $newWidth = $width;
+        }
+
+        // Perform resize
+        $this->_resize($newWidth, $newHeight, $bg, true);
+
+        // Calculate cropping area
+        $xPos = (int) ($newWidth - $width) / 2;
+        $yPos = (int) ($newHeight - $height) / 2;
+
+        // Crop image to reach desired size
+        $this->_crop($xPos, $yPos, $width, $height);
     }
 
     /**
@@ -799,12 +867,12 @@ class Image
         $this->hash = $this->getHash($type, $quality);
 
         // Generates the cache file
-        $file = $this->generateFileFromHash($this->hash.'.'.$type);
+        list($actualFile, $file) = $this->generateFileFromHash($this->hash.'.'.$type);
 
         // If the files does not exists, save it
-        if (!file_exists($file))
+        if (!file_exists($actualFile))
         {
-            $this->save($file, $type, $quality);
+            $this->save($actualFile, $type, $quality);
         }
 
         return $this->getFilename($file);
@@ -867,6 +935,14 @@ class Image
      */
     public function save($file, $type = 'jpeg', $quality = 80)
     {
+        if ($file) {
+            $directory = dirname($file);
+
+            if (!is_dir($directory)) {
+                @mkdir($directory, 0777, true);
+            }
+        }
+
         if (is_int($type))
         {
             $quality = $type;
@@ -996,6 +1072,17 @@ class Image
     {
         $image = new Image();
         $image->setData($data);
+
+        return $image;
+    }
+    
+    /**
+     * Creates an instance of image from resource
+     */
+    public static function fromResource($resource)
+    {
+        $image = new Image();
+        $image->setResource($resource);
 
         return $image;
     }
