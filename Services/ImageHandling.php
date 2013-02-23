@@ -53,15 +53,15 @@ class ImageHandling
      */
     private function createInstance($file, $w = null, $h = null)
     {
-        $asset = $this->container->get('templating.helper.assets');
+        $container = $this->container;
 
         $handler_class = $this->handler_class;
         $image = new $handler_class($file, $w, $h);
 
         $image->setCacheDir($this->cache_dir);
 
-        $image->setFileCallback(function($file) use ($asset) {
-            return $asset->getUrl($file);
+        $image->setFileCallback(function($file) use ($container) {
+            return $container->get('templating.helper.assets')->getUrl($file);
         });
 
         return $image;
