@@ -9,7 +9,7 @@ use Gregwar\ImageBundle\Image;
  *
  * @author Gregwar <g.passault@gmail.com>
  */
-class ImageHandler extends Image 
+class ImageHandler extends Image
 {
     protected $fileCallback = null;
 
@@ -28,7 +28,7 @@ class ImageHandler extends Image
     {
         $callback = $this->fileCallback;
 
-        if (null === $callback)
+        if (null === $callback || substr($filename, 0, 1) == '/')
             return $filename;
 
         return $callback($filename);
