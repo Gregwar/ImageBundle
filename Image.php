@@ -1,6 +1,6 @@
 <?php
 
-namespace Gregwar\ImageBundle;
+namespace Gregwar\Image;
 
 require_once (__DIR__.'/ImageColor.php');
 
@@ -25,6 +25,11 @@ class Image
      * GD Rssource
      */
     protected $gd = null;
+
+    /**
+     * Pretty name for the image
+     */
+    protected $prettyName = '';
 
     /**
      * User-defined resource
@@ -87,6 +92,20 @@ class Image
     public function setActualCacheDir($actualCacheDir)
     {
         $this->actualCacheDir = $actualCacheDir;
+
+        return $this;
+    }
+
+    /**
+     * Sets the pretty name of the image
+     */
+    public function setPrettyName($name)
+    {
+        $name = strtolower($name);
+        $name = str_replace(' ', '-', $name);
+        $this->prettyName = preg_replace('/([^a-z0-9\-]+)/m', '', $name);
+
+        return $this;
     }
 
     /**
@@ -146,8 +165,14 @@ class Image
             $actualDirectory .= '/' . $c;
         }
 
-        $file = $directory . '/' . substr($hash, 5);
-        $actualFile = $actualDirectory . '/' . substr($hash, 5);
+        $endName = substr($hash, 5);
+
+        if ($this->prettyName) {
+            $endName = $this->prettyName . '-' . $endName;
+        }
+
+        $file = $directory . '/' . $endName;
+        $actualFile = $actualDirectory . '/' . $endName;
 
         return array($actualFile, $file);
     }
@@ -672,7 +697,9 @@ class Image
      */
     protected function _rotate($angle, $background = 0xffffff)
     {
-        $this->gd = imagerotate($this->gd, $angle, $background);
+        $this->gd = imagerotate($this->gd, $angle, ImageColor::parse($background));
+        imagealphablending($this->gd, true);
+        imagesavealpha($this->gd, true);
     }
 
     /**
