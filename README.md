@@ -111,6 +111,10 @@ doesn't exists yet.
 
 The available methods are the same as the [Gregwar's Image](http://github.com/Gregwar/Image).
 
+You can also use the logical file names for bundle resources :
+
+    <img src="{{ image('@AcmeDemoBundle/Resources/images/linux.jpg').resize(100,100).negate }}" />
+
 Using Image API
 ---------------
 

@@ -4,6 +4,7 @@ namespace Gregwar\ImageBundle\Services;
 
 use Gregwar\ImageBundle\ImageHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
+use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
  * Image manipulation service
@@ -15,12 +16,14 @@ class ImageHandling
     private $cache_dir;
     private $container;
     private $handler_class;
+    private $kernel;
 
-    public function __construct($cache_dir, $handler_class, ContainerInterface $container)
+    public function __construct($cache_dir, $handler_class, ContainerInterface $container, KernelInterface $kernel)
     {
         $this->cache_dir = $cache_dir;
         $this->handler_class = $handler_class;
         $this->container = $container;
+        $this->kernel = $kernel;
     }
 
     /**
@@ -32,6 +35,10 @@ class ImageHandling
      */
     public function open($file)
     {
+        if (strlen($file)>=1 && $file[0] == '@') {
+            $file = $this->kernel->locateResource($file);
+        }
+
         return $this->createInstance($file);
     }
 
