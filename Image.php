@@ -293,7 +293,11 @@ class Image
             }
             else
             {
-                $this->gd = imagecreatefromstring($this->data);
+                $this->gd = @imagecreatefromstring($this->data);
+                
+                if (false === $this->gd) {
+                    throw new \UnexpectedValueException('Unable to create file from string.');
+                }
             }
         }
         else
