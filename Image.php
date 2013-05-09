@@ -351,7 +351,7 @@ class Image
      */
     public function openJpeg()
     {
-        $this->gd = imagecreatefromjpeg($this->file);
+        $this->gd = @imagecreatefromjpeg($this->file);
     }
 
     /**
@@ -359,7 +359,7 @@ class Image
      */
     public function openGif()
     {
-        $this->gd = imagecreatefromgif($this->file);
+        $this->gd = @imagecreatefromgif($this->file);
     }
 
     /**
@@ -367,7 +367,7 @@ class Image
      */
     public function openPng()
     {
-        $this->gd = imagecreatefrompng($this->file);
+        $this->gd = @imagecreatefrompng($this->file);
     }
 
     /**
