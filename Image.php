@@ -123,6 +123,10 @@ class Image
         {
             throw new \RuntimeException('You need to install GD PHP Extension to use this library');
         }
+
+        if ($originalFile !== null) {
+            $this->type = $this->guessType();
+        }
     }
 
     /**
@@ -304,8 +308,6 @@ class Image
         {
             if (null === $this->gd)
             {
-                $this->type = $this->guessType();
-
                 if (!(imagetypes() & self::$gdTypes[$this->type]))
                 {
                     throw new \RuntimeException('Type '.$this->type.' is not supported by GD');
@@ -582,6 +584,8 @@ class Image
      */
     public function _crop($x, $y, $w, $h) {
         $dst = imagecreatetruecolor($w, $h);
+        imagealphablending($dst, false);
+        imagesavealpha($dst, true);
         imagecopy($dst, $this->gd, 0, 0, $x, $y, imagesx($this->gd), imagesy($this->gd));
         imagedestroy($this->gd);
         $this->gd = $dst;
