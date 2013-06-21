@@ -610,6 +610,11 @@ class Image
     {
         $width = imagesx($this->gd);
         $height = imagesy($this->gd);
+        
+        if($width == 0 || $height == 0) {
+            return false;
+        }
+        
         $b_top = 0;
         $b_lft = 0;
         $b_btm = $height - 1;
