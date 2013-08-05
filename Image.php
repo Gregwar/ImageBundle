@@ -875,14 +875,8 @@ class Image
      */
     public function generateHash($type = 'guess', $quality = 80) 
     {
-        $ctime = 0;
-
-        try {
-            $ctime = filectime($this->file);
-        } 
-        catch (\Exception $e)
-        {
-        }
+        $ctime = @filectime($this->file);
+        $ctime = $ctime === false ? 0 : $ctime;
 
         $datas = array(
             $this->file,
