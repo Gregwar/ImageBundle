@@ -876,7 +876,7 @@ class Image
 
         if ($this->file) {
             try {
-                $inputInfos = filectime($this->file);
+                $inputInfos = @filectime($this->file);
             } catch (\Exception $e) {
             }
         } else {
