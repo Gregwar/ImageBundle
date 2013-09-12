@@ -91,6 +91,11 @@ class Image
     protected $height = null;
 
     /**
+     * Stream of a temporary file
+     */
+    protected $tempStreamFile = null;
+
+    /**
      * Supported types
      */
     public static $types = array(
@@ -143,7 +148,7 @@ class Image
 
     public function __construct($originalFile = null, $width = null, $height = null)
     {
-        $this->file = $originalFile;
+        $this->file = $this->loadFile($originalFile);
         $this->width = $width;
         $this->height = $height;
 
@@ -153,6 +158,40 @@ class Image
 
         if ($originalFile !== null) {
             $this->type = $this->guessType();
+        }
+    }
+
+    public function __destruct()
+    {
+        if($this->tempStreamFile) {
+            fclose($this->tempStreamFile);
+        }
+    }
+
+    protected function loadFile($file)
+    {
+        if (realpath($file) !== false) {
+            return $file;
+        } else {
+
+            $streamOptions = stream_context_get_params(stream_context_get_default());
+            // Check if we are  behind a proxy
+            if (isset($streamOptions["options"]["http"]["proxy"])
+                    || isset($streamOptions["options"]["https"]["proxy"])) {
+
+                $tmpfile = file_get_contents($file);
+
+                // Write $tmpfile in a temporary file
+                $this->tempStreamFile = tmpfile();
+                fwrite($this->tempStreamFile, $tmpfile);
+                fseek($this->tempStreamFile, 0);
+
+                $streamMetadData = stream_get_meta_data($this->tempStreamFile);
+
+                return $streamMetadData['uri'];
+            } else {
+                return $file;
+            }
         }
     }
 
@@ -225,7 +264,7 @@ class Image
      */
     public function fromFile($originalFile)
     {
-        $this->file = $originalFile;
+        $this->file = $this->loadFile($originalFile);
 
         return $this;
     }
