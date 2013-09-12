@@ -174,16 +174,24 @@ class Image
             return $file;
         } else {
 
-            $tmpfile = file_get_contents($file);
+            $streamOptions = stream_context_get_params(stream_context_get_default());
+            // Check if we are  behind a proxy
+            if (isset($streamOptions["options"]["http"]["proxy"])
+                    || isset($streamOptions["options"]["https"]["proxy"])) {
 
-            // Write $tmpfile in a temporary file
-            $this->tempStreamFile = tmpfile();
-            fwrite($this->tempStreamFile, $tmpfile);
-            fseek($this->tempStreamFile, 0);
+                $tmpfile = file_get_contents($file);
 
-            $streamMetadData = stream_get_meta_data($this->tempStreamFile);
+                // Write $tmpfile in a temporary file
+                $this->tempStreamFile = tmpfile();
+                fwrite($this->tempStreamFile, $tmpfile);
+                fseek($this->tempStreamFile, 0);
 
-            return $streamMetadData['uri'];
+                $streamMetadData = stream_get_meta_data($this->tempStreamFile);
+
+                return $streamMetadData['uri'];
+            } else {
+                return $file;
+            }
         }
     }
 
