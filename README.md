@@ -89,11 +89,16 @@ If you want to customize the cache directory name, you can specify it:
     gregwar_image:
         cache_dir:  my_cache_dir
 
-Creates the cache directory and change the permissions so the web server can write 
+Creates the cache directory and change the permissions so the web server can write
 in it:
 
     mkdir web/cache
     chmod 777 web/cache
+
+You can also disable the exception thrown if the given file does not exist:
+
+    gregwar_image:
+        throw_exception: false
 
 Usage
 =====
@@ -106,7 +111,7 @@ provides simple but powerful Twig extension. You can for instance use it this wa
 
     <img src="{{ image('linux.jpg').resize(100,100).negate }}" />
 
-And that's all ! The helper will automatically create the cached file on-the-fly if it 
+And that's all ! The helper will automatically create the cached file on-the-fly if it
 doesn't exists yet.
 
 The available methods are the same as the [Gregwar's Image](http://github.com/Gregwar/Image).

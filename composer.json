@@ -1,15 +1,20 @@
 {
-    "name": "gregwar/image-bundle",
+    "name": "mkurzeja/image-bundle",
     "type": "symfony-bundle",
     "description": "Image handling bundle",
     "keywords": ["symfony2", "image"],
-    "homepage": "https://github.com/Gregwar/ImageBundle",
+    "homepage": "https://github.com/mkurzeja/ImageBundle",
     "license": "MIT",
     "authors": [
         {
             "name": "Grégoire Passault",
             "email": "g.passault@gmail.com",
             "homepage": "http://www.gregwar.com/"
+        },
+        {
+            "name": "Michał Kurzeja",
+            "email": "mkurzeja@accesto.pl",
+            "homepage": "http://www.accesto.pl/"
         }
     ],
     "require": {
