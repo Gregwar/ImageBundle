@@ -17,13 +17,15 @@ class ImageHandling
     private $container;
     private $handler_class;
     private $kernel;
+    private $throwException;
 
-    public function __construct($cache_dir, $handler_class, ContainerInterface $container, KernelInterface $kernel)
+    public function __construct($cache_dir, $handler_class, ContainerInterface $container, KernelInterface $kernel, $throwException)
     {
         $this->cache_dir = $cache_dir;
         $this->handler_class = $handler_class;
         $this->container = $container;
         $this->kernel = $kernel;
+        $this->throwException = $throwException;
     }
 
     /**
@@ -63,7 +65,7 @@ class ImageHandling
         $container = $this->container;
 
         $handler_class = $this->handler_class;
-        $image = new $handler_class($file, $w, $h);
+        $image = new $handler_class($file, $w, $h, $this->throwException);
 
         $image->setCacheDir($this->cache_dir);
 

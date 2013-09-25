@@ -17,17 +17,12 @@ class GregwarImageExtension extends Extension
 {
     public function load(array $configs, ContainerBuilder $container)
     {
-        $cacheDir = 'cache';
 
-        $config = array();
-        foreach ($configs as $subConfig) {
-            $config = array_merge($config, $subConfig);
-        }
+        $configuration = new Configuration();
+        $config        = $this->processConfiguration($configuration, $configs);
 
-        if (isset($config['cache_dir']))
-            $cacheDir = $config['cache_dir'];
-
-        $container->setParameter('gregwar_image.cache_dir', $cacheDir);
+        $container->setParameter('gregwar_image.cache_dir', $config['cache_dir']);
+        $container->setParameter('gregwar_image.throw_exception', $config['throw_exception']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
