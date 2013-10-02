@@ -95,10 +95,16 @@ in it:
     mkdir web/cache
     chmod 777 web/cache
 
-You can also disable the exception thrown if the given file does not exist:
+You can also enable the exception thrown if the given file does not exist:
 
     gregwar_image:
-        throw_exception: false
+        throw_exception: true
+
+If you don't throw an exception, you can set the `fallback_image`, to set the
+image that should be rendered in this case:
+
+    gregwar_image:
+        fallback_image: /path/to/your/fallback.jpg
 
 Usage
 =====

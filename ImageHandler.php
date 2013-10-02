@@ -2,7 +2,7 @@
 
 namespace Gregwar\ImageBundle;
 
-use Gregwar\ImageBundle\Image;
+use Gregwar\Image\Image;
 
 /**
  * Image manipulation class
@@ -12,7 +12,6 @@ use Gregwar\ImageBundle\Image;
 class ImageHandler extends Image
 {
     protected $fileCallback   = null;
-    protected $throwException = null;
 
     /**
      * @param null $originalFile
@@ -20,9 +19,10 @@ class ImageHandler extends Image
      * @param null $height
      * @param bool $throwException
      */
-    public function __construct($originalFile = null, $width = null, $height = null, $throwException = null)
+    public function __construct($originalFile = null, $width = null, $height = null, $throwException = null, $fallbackImage = null)
     {
-        $this->throwException = $throwException;
+        $this->useFallback(!$throwException);
+        $this->setFallback($fallbackImage);
         parent::__construct($originalFile, $width, $height);
     }
 
@@ -50,26 +50,12 @@ class ImageHandler extends Image
 
     public function save($file, $type = 'guess', $quality = 80)
     {
-        try{
-            return parent::save($file, $type, $quality);
-        } catch(\Exception $e) {
-            if($this->throwException) {
-                throw $e;
-            }
-            return false;
-        }
+        return parent::save($file, $type, $quality);
     }
 
     public function __toString()
     {
-        try{
-            return parent::__toString();
-        } catch(\Exception $e) {
-            if($this->throwException) {
-                return $e->getMessage();
-            }
-            return '';
-        }
+        return parent::__toString();
     }
 }
 

@@ -14,7 +14,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "ext-gd": "*"
+        "ext-gd": "*",
+        "gregwar/image": "v2.0.3"
     },
     "autoload": {
         "psr-0": {
