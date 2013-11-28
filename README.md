@@ -115,7 +115,9 @@ Basics
 This bundle is based on the [Gregwar's Image](http://github.com/Gregwar/Image) class and
 provides simple but powerful Twig extension. You can for instance use it this way:
 
-    <img src="{{ image('linux.jpg').resize(100,100).negate }}" />
+```html
+<img src="{{ image('linux.jpg').resize(100,100).negate }}" />
+```
 
 And that's all ! The helper will automatically create the cached file on-the-fly if it
 doesn't exists yet.
@@ -124,7 +126,17 @@ The available methods are the same as the [Gregwar's Image](http://github.com/Gr
 
 You can also use the logical file names for bundle resources :
 
-    <img src="{{ image('@AcmeDemoBundle/Resources/images/linux.jpg').resize(100,100).negate }}" />
+```html
+<img src="{{ image('@AcmeDemoBundle/Resources/images/linux.jpg').resize(100,100).negate }}" />
+```
+
+If you use `web_image()` helper, the image file path will be prefixed by the `web/` absolute
+directory of your application:
+
+```html
+<!-- The image some/image.jpg will be prefixed by web directory prefix -->
+<img src="{{ web_image('some/image.jpg').resize('10%') }}" />
+```
 
 Using Image API
 ---------------

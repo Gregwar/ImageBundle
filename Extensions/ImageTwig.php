@@ -32,8 +32,17 @@ class ImageTwig extends \Twig_Extension
     {
         return array(
             'image' => new \Twig_Function_Method($this, 'image', array('is_safe' => array('html'))),
-            'new_image' => new \Twig_Function_Method($this, 'newImage', array('is_safe' => array('html')))
+            'new_image' => new \Twig_Function_Method($this, 'newImage', array('is_safe' => array('html'))),
+            'web_image' => new \Twig_Function_Method($this, 'webImage', array('is_safe' => array('html'))),
         );
+    }
+
+    public function webImage($path)
+    {
+        $kernel = $this->container->get('kernel');
+        $directory = $kernel->getRootDir().'/../web/';
+
+        return $this->container->get('image.handling')->open($directory.'/'.$path);
     }
 
     public function image($path)
