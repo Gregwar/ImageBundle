@@ -13,16 +13,16 @@ use Symfony\Component\HttpKernel\KernelInterface;
  */
 class ImageHandling
 {
-    private $cache_dir;
+    private $cacheDirectory;
     private $container;
-    private $handler_class;
+    private $handlerClass;
     private $kernel;
     private $throwException;
 
-    public function __construct($cache_dir, $handler_class, ContainerInterface $container, KernelInterface $kernel, $throwException)
+    public function __construct($cacheDirectory, $handlerClass, ContainerInterface $container, KernelInterface $kernel, $throwException)
     {
-        $this->cache_dir = $cache_dir;
-        $this->handler_class = $handler_class;
+        $this->cacheDirectory = $cacheDirectory;
+        $this->handlerClass = $handlerClass;
         $this->container = $container;
         $this->kernel = $kernel;
         $this->throwException = $throwException;
@@ -64,10 +64,11 @@ class ImageHandling
     {
         $container = $this->container;
 
-        $handler_class = $this->handler_class;
-        $image = new $handler_class($file, $w, $h, $this->throwException);
+        $handlerClass = $this->handlerClass;
+        $image = new $handlerClass($file, $w, $h, $this->throwException);
 
-        $image->setCacheDir($this->cache_dir);
+        $image->setCacheDir($this->cacheDirectory);
+        $image->setActualCacheDir($this->container->get('kernel')->getRootDir().'/../web/'.$this->cacheDirectory);
 
         $image->setFileCallback(function($file) use ($container) {
             return $container->get('templating.helper.assets')->getUrl($file);
