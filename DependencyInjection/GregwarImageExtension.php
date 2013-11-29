@@ -19,7 +19,7 @@ class GregwarImageExtension extends Extension
     {
 
         $configuration = new Configuration();
-        $config        = $this->processConfiguration($configuration, $configs);
+        $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('gregwar_image.cache_dir', $config['cache_dir']);
         $container->setParameter('gregwar_image.throw_exception', $config['throw_exception']);
@@ -29,4 +29,3 @@ class GregwarImageExtension extends Extension
         $loader->load('services.yml');
     }
 }
-

@@ -11,7 +11,7 @@ use Gregwar\Image\Image;
  */
 class ImageHandler extends Image
 {
-    protected $fileCallback   = null;
+    protected $fileCallback = null;
 
     /**
      * @param null $originalFile
@@ -23,6 +23,7 @@ class ImageHandler extends Image
     {
         $this->useFallback(!$throwException);
         $this->setFallback($fallbackImage);
+
         parent::__construct($originalFile, $width, $height);
     }
 
@@ -30,9 +31,9 @@ class ImageHandler extends Image
     /**
      * Defines the callback to call to compute the new filename
      */
-    public function setFileCallback($file)
+    public function setFileCallback($fileCallback)
     {
-        $this->fileCallback = $file;
+        $this->fileCallback = $fileCallback;
     }
 
     /**
@@ -42,8 +43,9 @@ class ImageHandler extends Image
     {
         $callback = $this->fileCallback;
 
-        if (null === $callback || substr($filename, 0, 1) == '/')
+        if (null === $callback || substr($filename, 0, 1) == '/') {
             return $filename;
+        }
 
         return $callback($filename);
     }
@@ -58,4 +60,3 @@ class ImageHandler extends Image
         return parent::__toString();
     }
 }
-

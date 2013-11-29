@@ -23,7 +23,8 @@ class Configuration implements ConfigurationInterface
             ->scalarNode('cache_dir')->defaultValue('cache')->end()
             ->booleanNode('throw_exception')->defaultFalse()->end()
             ->scalarNode('fallback_image')->defaultValue(null)->end()
-            ->end();
+            ->end()
+            ;
 
         return $treeBuilder;
     }
