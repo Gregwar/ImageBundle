@@ -42,7 +42,7 @@ class ImageTwig extends \Twig_Extension
         $kernel = $this->container->get('kernel');
         $directory = $kernel->getRootDir().'/../web/';
 
-        return $this->container->get('image.handling')->open($directory.'/'.$path);
+        return $this->container->get('image.handling')->open($directory . $path);
     }
 
     public function image($path)
