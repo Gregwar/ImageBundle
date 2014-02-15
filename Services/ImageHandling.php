@@ -63,12 +63,13 @@ class ImageHandling
     private function createInstance($file, $w = null, $h = null)
     {
         $container = $this->container;
+        $webDir = $container->getParameter('gregwar_image.web_dir');
 
         $handlerClass = $this->handlerClass;
         $image = new $handlerClass($file, $w, $h, $this->throwException);
 
         $image->setCacheDir($this->cacheDirectory);
-        $image->setActualCacheDir($this->container->get('kernel')->getRootDir().'/../web/'.$this->cacheDirectory);
+        $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);
 
         $image->setFileCallback(function($file) use ($container) {
             return $container->get('templating.helper.assets')->getUrl($file);
