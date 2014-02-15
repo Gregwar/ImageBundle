@@ -106,6 +106,13 @@ image that should be rendered in this case:
     gregwar_image:
         fallback_image: /path/to/your/fallback.jpg
 
+If you have to change directories hierarchy or Web's name (e.g. web => public_html), 
+you can set the `web_dir` to your new Web path:
+    
+    gregwar_image:
+        web_dir: %kernel.root_dir%/../../public_html
+        
+
 Usage
 =====
 

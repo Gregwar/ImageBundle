@@ -39,9 +39,7 @@ class ImageTwig extends \Twig_Extension
 
     public function webImage($path)
     {
-        $kernel = $this->container->get('kernel');
-        $directory = $kernel->getRootDir().'/../web/';
-
+        $directory = $this->container->getParameter('gregwar_image.web_dir') .'/';
         return $this->container->get('image.handling')->open($directory . $path);
     }
 
