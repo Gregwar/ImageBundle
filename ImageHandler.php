@@ -21,10 +21,10 @@ class ImageHandler extends Image
      */
     public function __construct($originalFile = null, $width = null, $height = null, $throwException = null, $fallbackImage = null)
     {
+        parent::__construct($originalFile, $width, $height);
+
         $this->useFallback(!$throwException);
         $this->setFallback($fallbackImage);
-
-        parent::__construct($originalFile, $width, $height);
     }
 
 
