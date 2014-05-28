@@ -19,13 +19,14 @@ class ImageHandling
     private $kernel;
     private $throwException;
 
-    public function __construct($cacheDirectory, $handlerClass, ContainerInterface $container, KernelInterface $kernel, $throwException)
+    public function __construct($cacheDirectory, $handlerClass, ContainerInterface $container, KernelInterface $kernel, $throwException, $fallbackImage)
     {
         $this->cacheDirectory = $cacheDirectory;
         $this->handlerClass = $handlerClass;
         $this->container = $container;
         $this->kernel = $kernel;
         $this->throwException = $throwException;
+        $this->fallbackImage = $fallbackImage;
     }
 
     /**
@@ -66,7 +67,7 @@ class ImageHandling
         $webDir = $container->getParameter('gregwar_image.web_dir');
 
         $handlerClass = $this->handlerClass;
-        $image = new $handlerClass($file, $w, $h, $this->throwException);
+        $image = new $handlerClass($file, $w, $h, $this->throwException, $this->fallbackImage);
 
         $image->setCacheDir($this->cacheDirectory);
         $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);
