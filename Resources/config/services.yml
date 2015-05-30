@@ -7,7 +7,7 @@ services:
     # Image handling factory
     image.handling:
         class: %image.handling.class%
-        arguments: [%gregwar_image.cache_dir%, %image.handler.class%, @service_container, @kernel, %gregwar_image.throw_exception%, %gregwar_image.fallback_image%]
+        arguments: [%gregwar_image.cache_dir%, %gregwar_image.cache_dir_mode% ,%image.handler.class%, @service_container, @kernel, %gregwar_image.throw_exception%, %gregwar_image.fallback_image%]
 
     # Helper Twig
     twig.extension.image:

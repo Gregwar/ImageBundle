@@ -21,8 +21,9 @@ class Configuration implements ConfigurationInterface
         $rootNode
             ->children()
             ->scalarNode('cache_dir')->defaultValue('cache')->end()
+            ->scalarNode('cache_dir_mode')->defaultNull()->example('0755')->end()
             ->booleanNode('throw_exception')->defaultFalse()->end()
-            ->scalarNode('fallback_image')->defaultValue(null)->end()
+            ->scalarNode('fallback_image')->defaultNull()->end()
             ->scalarNode('web_dir')->defaultValue('%kernel.root_dir%/../web')->end()
             ->end()
             ;

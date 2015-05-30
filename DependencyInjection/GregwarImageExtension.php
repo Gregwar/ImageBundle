@@ -22,6 +22,7 @@ class GregwarImageExtension extends Extension
         $config = $this->processConfiguration($configuration, $configs);
 
         $container->setParameter('gregwar_image.cache_dir', $config['cache_dir']);
+        $container->setParameter('gregwar_image.cache_dir_mode', $config['cache_dir_mode']);
         $container->setParameter('gregwar_image.throw_exception', $config['throw_exception']);
         $container->setParameter('gregwar_image.fallback_image', $config['fallback_image']);
         $container->setParameter('gregwar_image.web_dir', $config['web_dir']);
