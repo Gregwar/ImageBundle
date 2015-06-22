@@ -1,4 +1,4 @@
-Gregwar's ImageBundle
+Gregwar's ImageBundle booo
 =====================
 
 `GregwarImageBundle` provides easy Image manipulation and API for Symfony2 and Twig
