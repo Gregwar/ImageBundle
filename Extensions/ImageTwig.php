@@ -22,7 +22,7 @@ class ImageTwig extends \Twig_Extension
     {
         $this->container = $container;
     }
-    
+
     public function initRuntime(\Twig_Environment $environment)
     {
         $this->environment = $environment;
@@ -31,9 +31,9 @@ class ImageTwig extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            'image' => new \Twig_Function_Method($this, 'image', array('is_safe' => array('html'))),
-            'new_image' => new \Twig_Function_Method($this, 'newImage', array('is_safe' => array('html'))),
-            'web_image' => new \Twig_Function_Method($this, 'webImage', array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('image', array($this, 'image'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('new_image', array($this, 'newImage'), array('is_safe' => array('html'))),
+            new \Twig_SimpleFunction('web_image', array($this, 'webImage'), array('is_safe' => array('html'))),
         );
     }
 
@@ -47,7 +47,7 @@ class ImageTwig extends \Twig_Extension
     {
         return $this->container->get('image.handling')->open($path);
     }
-    
+
     public function newImage($width, $height)
     {
         return $this->container->get('image.handling')->create($width, $height);
