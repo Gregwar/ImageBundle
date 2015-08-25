@@ -2,10 +2,7 @@
 
 namespace Gregwar\ImageBundle\Extensions;
 
-use Symfony\Component\Templating\EngineInterface;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-
-use Symfony\Component\Form\FormView;
 
 /**
  * ImageTwig extension
