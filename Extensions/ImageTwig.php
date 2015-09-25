@@ -5,7 +5,7 @@ namespace Gregwar\ImageBundle\Extensions;
 use Gregwar\ImageBundle\Services\ImageHandling;
 
 /**
- * ImageTwig extension
+ * ImageTwig extension.
  *
  * @author Gregwar <g.passault@gmail.com>
  * @author bzikarsky <benjamin.zikarsky@perbility.de>
@@ -85,4 +85,3 @@ class ImageTwig extends \Twig_Extension
         return 'image';
     }
 }
-

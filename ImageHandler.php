@@ -5,7 +5,7 @@ namespace Gregwar\ImageBundle;
 use Gregwar\Image\Image;
 
 /**
- * Image manipulation class
+ * Image manipulation class.
  *
  * @author Gregwar <g.passault@gmail.com>
  */
@@ -27,9 +27,8 @@ class ImageHandler extends Image
         $this->setFallback($fallbackImage);
     }
 
-
     /**
-     * Defines the callback to call to compute the new filename
+     * Defines the callback to call to compute the new filename.
      */
     public function setFileCallback($fileCallback)
     {
@@ -37,7 +36,7 @@ class ImageHandler extends Image
     }
 
     /**
-     * When processing the filename, call the callback
+     * When processing the filename, call the callback.
      */
     protected function getFilename($filename)
     {

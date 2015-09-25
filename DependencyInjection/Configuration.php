@@ -1,11 +1,11 @@
 <?php
+
 /**
  * @Author: Michał Kurzeja, Accesto
  * User: michal
  * Date: 24.09.13
  * Time: 10:18
  */
-
 namespace Gregwar\ImageBundle\DependencyInjection;
 
 use Symfony\Component\Config\Definition\Builder\TreeBuilder;
