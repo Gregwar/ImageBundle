@@ -19,6 +19,9 @@
         "twig/twig": "~1.12",
         "gregwar/image": "2.*"
     },
+    "require-dev": {
+        "sllh/php-cs-fixer-styleci-bridge": "~1.1"
+    },
     "autoload": {
         "psr-0": {
             "Gregwar\\ImageBundle": ""
