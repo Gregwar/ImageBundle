@@ -12,7 +12,7 @@ services:
     # Helper Twig
     twig.extension.image:
         class: Gregwar\ImageBundle\Extensions\ImageTwig
-        arguments: [@service_container]
+        arguments: [@image.handling, %gregwar_image.web_dir%]
         tags:
             - { name: twig.extension }
 

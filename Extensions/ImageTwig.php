@@ -2,7 +2,7 @@
 
 namespace Gregwar\ImageBundle\Extensions;
 
-use Symfony\Component\DependencyInjection\ContainerInterface;
+use Gregwar\ImageBundle\Services\ImageHandling;
 
 /**
  * ImageTwig extension
@@ -12,19 +12,29 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
  */
 class ImageTwig extends \Twig_Extension
 {
-    private $container;
-    private $environment;
+    /**
+     * @var ImageHandling
+     */
+    private $imageHandling;
 
-    public function __construct(ContainerInterface $container)
+    /**
+     * @var string
+     */
+    private $webDir;
+
+    /**
+     * @param ImageHandling $imageHandling
+     * @param string        $webDir
+     */
+    public function __construct(ImageHandling $imageHandling, $webDir)
     {
-        $this->container = $container;
+        $this->imageHandling = $imageHandling;
+        $this->webDir = $webDir;
     }
 
-    public function initRuntime(\Twig_Environment $environment)
-    {
-        $this->environment = $environment;
-    }
-
+    /**
+     * {@inheritdoc}
+     */
     public function getFunctions()
     {
         return array(
@@ -34,22 +44,42 @@ class ImageTwig extends \Twig_Extension
         );
     }
 
+    /**
+     * @param string $path
+     *
+     * @return object
+     */
     public function webImage($path)
     {
-        $directory = $this->container->getParameter('gregwar_image.web_dir') .'/';
-        return $this->container->get('image.handling')->open($directory . $path);
+        $directory = $this->webDir.'/';
+
+        return $this->imageHandling->open($directory . $path);
     }
 
+    /**
+     * @param string $path
+     *
+     * @return object
+     */
     public function image($path)
     {
-        return $this->container->get('image.handling')->open($path);
+        return $this->imageHandling->open($path);
     }
 
+    /**
+     * @param string $width
+     * @param string $height
+     *
+     * @return object
+     */
     public function newImage($width, $height)
     {
-        return $this->container->get('image.handling')->create($width, $height);
+        return $this->imageHandling->create($width, $height);
     }
 
+    /**
+     * {@inheritdoc}
+     */
     public function getName()
     {
         return 'image';
