@@ -4,7 +4,7 @@ namespace Gregwar\ImageBundle\Services;
 
 use Gregwar\ImageBundle\ImageHandler;
 use Symfony\Component\DependencyInjection\ContainerInterface;
-use Symfony\Component\HttpKernel\KernelInterface;
+use Symfony\Component\HttpKernel\Config\FileLocator;
 
 /**
  * Image manipulation service
@@ -17,16 +17,16 @@ class ImageHandling
     private $cacheDirMode;
     private $container;
     private $handlerClass;
-    private $kernel;
+    private $fileLocator;
     private $throwException;
 
-    public function __construct($cacheDirectory, $cacheDirMode, $handlerClass, ContainerInterface $container, KernelInterface $kernel, $throwException, $fallbackImage)
+    public function __construct($cacheDirectory, $cacheDirMode, $handlerClass, ContainerInterface $container, FileLocator $fileLocator, $throwException, $fallbackImage)
     {
         $this->cacheDirectory = $cacheDirectory;
         $this->cacheDirMode = intval($cacheDirMode);
         $this->handlerClass = $handlerClass;
         $this->container = $container;
-        $this->kernel = $kernel;
+        $this->fileLocator = $fileLocator;
         $this->throwException = $throwException;
         $this->fallbackImage = $fallbackImage;
     }
@@ -41,7 +41,7 @@ class ImageHandling
     public function open($file)
     {
         if (strlen($file)>=1 && $file[0] == '@') {
-            $file = $this->kernel->locateResource($file);
+            $file = $this->fileLocator->locate($file);
         }
 
         return $this->createInstance($file);
