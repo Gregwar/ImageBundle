@@ -53,7 +53,7 @@ class ImageTwig extends \Twig_Extension
     {
         $directory = $this->webDir.'/';
 
-        return $this->imageHandling->open($directory . $path);
+        return $this->imageHandling->open($directory.$path);
     }
 
     /**
