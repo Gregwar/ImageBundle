@@ -2,7 +2,7 @@
     "name": "gregwar/image-bundle",
     "type": "symfony-bundle",
     "description": "Image handling bundle",
-    "keywords": ["symfony2", "image"],
+    "keywords": ["symfony", "image"],
     "homepage": "https://github.com/Gregwar/ImageBundle",
     "license": "MIT",
     "authors": [
@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "ext-gd": "*",
-        "symfony/framework-bundle": "~2.3",
+        "symfony/framework-bundle": "^2.3 || ^3.0",
         "twig/twig": "~1.12",
         "gregwar/image": "2.*"
     },
