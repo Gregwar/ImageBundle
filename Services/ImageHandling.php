@@ -8,7 +8,7 @@ use Symfony\Component\DependencyInjection\ContainerInterface;
 use Symfony\Component\HttpKernel\KernelInterface;
 
 /**
- * Image manipulation service
+ * Image manipulation service.
  *
  * @author Gregwar <g.passault@gmail.com>
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
@@ -82,7 +82,7 @@ class ImageHandling
     }
 
     /**
-     * Get a manipulable image instance
+     * Get a manipulable image instance.
      *
      * @param string $file the image path
      *
@@ -90,7 +90,7 @@ class ImageHandling
      */
     public function open($file)
     {
-        if (strlen($file)>=1 && $file[0] == '@') {
+        if (strlen($file) >= 1 && $file[0] == '@') {
             $file = $this->fileLocator instanceof FileLocatorInterface
                 ? $this->fileLocator->locate($file) : $this->fileLocator->locateResource($file);
         }
@@ -99,7 +99,7 @@ class ImageHandling
     }
 
     /**
-     * Get a new image
+     * Get a new image.
      *
      * @param string $w the width
      * @param string $h the height
@@ -112,7 +112,7 @@ class ImageHandling
     }
 
     /**
-     * Creates an instance defining the cache directory
+     * Creates an instance defining the cache directory.
      *
      * @param string      $file
      * @param string|null $w
@@ -133,7 +133,7 @@ class ImageHandling
         $image->setCacheDirMode($this->cacheDirMode);
         $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);
 
-        $image->setFileCallback(function($file) use ($container) {
+        $image->setFileCallback(function ($file) use ($container) {
             return $container->get('templating.helper.assets')->getUrl($file);
         });
 
