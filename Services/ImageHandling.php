@@ -134,7 +134,7 @@ class ImageHandling
         $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);
 
         $image->setFileCallback(function ($file) use ($container) {
-            return $container->get('templating.helper.assets')->getUrl($file);
+            return $container->get('assets.packages')->getUrl($file);
         });
 
         return $image;
