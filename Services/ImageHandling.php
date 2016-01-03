@@ -133,13 +133,15 @@ class ImageHandling
         $image->setCacheDirMode($this->cacheDirMode);
         $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);
 
-        $image->setFileCallback(function ($file) use ($container) {
-            if ($container->has('templating.helper.assets')) {
+        if ($container->has('templating.helper.assets')) {
+            $image->setFileCallback(function ($file) use ($container) {
                 return $container->get('templating.helper.assets')->getUrl($file);
-            } else {
+            });
+        } else {
+            $image->setFileCallback(function ($file) use ($container) {
                 return $container->get('assets.packages')->getUrl($file);
-            }
-        });
+            });
+        }
 
         return $image;
     }
