@@ -15,6 +15,7 @@ services:
           - '@file_locator'
           - '%gregwar_image.throw_exception%'
           - '%gregwar_image.fallback_image%'
+          - '%gregwar_image.adapter%'
 
     # Helper Twig
     twig.extension.image:

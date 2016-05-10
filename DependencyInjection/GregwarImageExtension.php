@@ -24,6 +24,7 @@ class GregwarImageExtension extends Extension
         $container->setParameter('gregwar_image.throw_exception', $config['throw_exception']);
         $container->setParameter('gregwar_image.fallback_image', $config['fallback_image']);
         $container->setParameter('gregwar_image.web_dir', $config['web_dir']);
+        $container->setParameter('gregwar_image.adapter', $config['adapter']);
 
         $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/../Resources/config'));
         $loader->load('services.yml');
