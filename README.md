@@ -117,7 +117,7 @@ There is currently only one adapter (GD) included with
 adapter you can configure it like so:
 
     gregwar_image:
-        adapter: "My\Custom\adapter"
+        adapter: "My\Custom\Adapter"
 
 Usage
 =====
