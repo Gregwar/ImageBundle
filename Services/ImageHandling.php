@@ -91,8 +91,19 @@ class ImageHandling
     public function open($file)
     {
         if (strlen($file) >= 1 && $file[0] == '@') {
-            $file = $this->fileLocator instanceof FileLocatorInterface
-                ? $this->fileLocator->locate($file) : $this->fileLocator->locateResource($file);
+            try {
+                if ($this->fileLocator instanceof FileLocatorInterface) {
+                    $file = $this->fileLocator->locate($file);
+                } else {
+                    $this->fileLocator->locateResource($file);
+                }
+            } catch (\InvalidArgumentException $exception) {
+                if ($this->throwException || false == $this->fallbackImage) {
+                    throw $exception;
+                }
+
+                $file = $this->fallbackImage;
+            }
         }
 
         return $this->createInstance($file);
