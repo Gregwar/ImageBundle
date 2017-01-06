@@ -46,6 +46,11 @@ class ImageHandling
     private $throwException;
 
     /**
+     * @var string
+     */
+    private $adapter;
+
+    /**
      * @param string                               $cacheDirectory
      * @param int                                  $cacheDirMode
      * @param string                               $handlerClass
@@ -53,8 +58,9 @@ class ImageHandling
      * @param KernelInterface|FileLocatorInterface $fileLocator
      * @param bool                                 $throwException
      * @param string                               $fallbackImage
+     * @param string                               $adapter
      */
-    public function __construct($cacheDirectory, $cacheDirMode, $handlerClass, ContainerInterface $container, $fileLocator, $throwException, $fallbackImage)
+    public function __construct($cacheDirectory, $cacheDirMode, $handlerClass, ContainerInterface $container, $fileLocator, $throwException, $fallbackImage, $adapter)
     {
         if (!$fileLocator instanceof FileLocatorInterface && $fileLocator instanceof KernelInterface) {
             throw new \InvalidArgumentException(
@@ -79,6 +85,7 @@ class ImageHandling
         $this->fileLocator = $fileLocator;
         $this->throwException = $throwException;
         $this->fallbackImage = $fallbackImage;
+        $this->adapter = $adapter;
     }
 
     /**
@@ -140,6 +147,11 @@ class ImageHandling
         /** @var ImageHandler $image */
         $image = new $handlerClass($file, $w, $h, $this->throwException, $this->fallbackImage);
 
+        if (class_exists($this->adapter)) {
+            $this->adapter = new $this->adapter();
+        }
+
+        $image->setAdapter($this->adapter);
         $image->setCacheDir($this->cacheDirectory);
         $image->setCacheDirMode($this->cacheDirMode);
         $image->setActualCacheDir($webDir.'/'.$this->cacheDirectory);

@@ -113,7 +113,13 @@ you can set the `web_dir` to your new Web path:
     
     gregwar_image:
         web_dir: %kernel.root_dir%/../../public_html
-        
+
+There is currently only one adapter (GD) included with 
+[Gregwar's Image](http://github.com/Gregwar/Image), however if you have a custom 
+adapter you can configure it like so:
+
+    gregwar_image:
+        adapter: "My\Custom\Adapter"
 
 Usage
 =====

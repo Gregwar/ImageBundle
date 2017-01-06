@@ -25,6 +25,7 @@ class Configuration implements ConfigurationInterface
             ->booleanNode('throw_exception')->defaultFalse()->end()
             ->scalarNode('fallback_image')->defaultNull()->end()
             ->scalarNode('web_dir')->defaultValue('%kernel.root_dir%/../web')->end()
+            ->scalarNode('adapter')->defaultValue('gd')->end()
             ->end()
             ;
 
