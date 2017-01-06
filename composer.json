@@ -16,7 +16,7 @@
         "php": ">=5.3.3",
         "ext-gd": "*",
         "symfony/framework-bundle": "^2.3 || ^3.0",
-        "twig/twig": "~1.12",
+        "twig/twig": "^1.12 || ^2.0",
         "gregwar/image": "2.*"
     },
     "require-dev": {
