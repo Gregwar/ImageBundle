@@ -113,7 +113,15 @@ you can set the `web_dir` to your new Web path:
     
     gregwar_image:
         web_dir: %kernel.root_dir%/../../public_html
-        
+
+With Symfony Flex
+-----------------
+
+With Symfony Flex architecture, you can create the ``config/packages/gregwar_image.yaml``
+file with the following contents:
+    
+    gregwar_image:
+        web_dir: %kernel.root_dir%/../public
 
 Usage
 =====
