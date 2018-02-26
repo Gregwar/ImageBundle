@@ -26,5 +26,10 @@
         "psr-4": {
             "Gregwar\\ImageBundle\\": ""
         }
+    },
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
     }
 }
