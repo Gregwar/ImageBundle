@@ -1,9 +1,9 @@
 {
-    "name": "gregwar/image-bundle",
+    "name": "sentence/image-bundle",
     "type": "symfony-bundle",
     "description": "Image handling bundle",
     "keywords": ["symfony", "image"],
-    "homepage": "https://github.com/Gregwar/ImageBundle",
+    "homepage": "https://github.com/Sentence/ImageBundle",
     "license": "MIT",
     "authors": [
         {
