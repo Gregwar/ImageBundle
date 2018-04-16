@@ -3,7 +3,7 @@
     "type": "symfony-bundle",
     "description": "Image handling bundle",
     "keywords": ["symfony", "image"],
-    "homepage": "https://github.com/Sentence/ImageBundle",
+    "homepage": "https://github.com/Arkounay/GregwarImageBundleSf4",
     "license": "MIT",
     "authors": [
         {
