@@ -15,7 +15,7 @@
     "require": {
         "php": ">=5.3.3",
         "ext-gd": "*",
-        "symfony/framework-bundle": "^2.3 || ^3.0",
+        "symfony/framework-bundle": "^2.3 || ^3.0 || ^4.0",
         "twig/twig": "^1.12 || ^2.0",
         "gregwar/image": "2.*"
     },
@@ -23,9 +23,13 @@
         "sllh/php-cs-fixer-styleci-bridge": "~1.1"
     },
     "autoload": {
-        "psr-0": {
-            "Gregwar\\ImageBundle": ""
+        "psr-4": {
+            "Gregwar\\ImageBundle\\": ""
         }
     },
-    "target-dir": "Gregwar/ImageBundle"
+    "extra": {
+        "branch-alias": {
+            "dev-master": "2.x-dev"
+        }
+    }
 }

@@ -12,6 +12,7 @@ services:
           - '%gregwar_image.cache_dir_mode%'
           - '%image.handler.class%'
           - '@service_container'
+          - '@assets.packages'
           - '@file_locator'
           - '%gregwar_image.throw_exception%'
           - '%gregwar_image.fallback_image%'
