@@ -7,6 +7,7 @@ services:
     # Image handling factory
     image.handling:
         class: '%image.handling.class%'
+        public: true
         arguments:
           - '%gregwar_image.cache_dir%'
           - '%gregwar_image.cache_dir_mode%'
