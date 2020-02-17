@@ -3,84 +3,22 @@ Gregwar's ImageBundle
 
 [![paypal](https://www.paypalobjects.com/en_US/i/btn/btn_donateCC_LG.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=YUXRLWHQSWS6L)
 
-`GregwarImageBundle` provides easy Image manipulation and API for Symfony2 and Twig
+`GregwarImageBundle` provides easy Image manipulation and API for Symfony and Twig
+
+If you use older version than Symfony 4, please use the `2.*` version, else you can
+use `3.*`.
 
 Installation
 ============
 
 ### Step 1: Download the GregwarImageBundle
 
-***Using the vendors script***
-
-Add the following lines to your `deps` file:
+Run the following composer command:
 
 ```
-    [GregwarImageBundle]
-        git=http://github.com/Gregwar/ImageBundle.git
-        target=/bundles/Gregwar/ImageBundle
+    composer req gregwar/image-bundle
 ```
-
-Now, run the vendors script to download the bundle:
-
-``` bash
-$ php bin/vendors install
-```
-
-***Using submodules***
-
-If you prefer instead to use git submodules, then run the following:
-
-``` bash
-$ git submodule add git://github.com/Gregwar/ImageBundle.git vendor/bundles/Gregwar/ImageBundle
-$ git submodule update --init
-```
-
-***Using Composer***
-
-Add the following to the "require" section of your `composer.json` file:
-
-```
-    "gregwar/image-bundle": "dev-master"
-```
-
-You can also choose a version number, (tag, commit ...)
-
-And update your dependencies
-
-```
-    php composer.phar update
-```
-
-### Step 2: Configure the Autoloader
-
-If you use composer, you can skip this step.
-
-Add it to your `autoload.pp` :
-
-```php
-<?php
-...
-'Gregwar' => __DIR__.'/../vendor/bundles',
-```
-
-### Step 3: Enable the bundle
-
-Registers the bundle in your `app/AppKernel.php`:
-
-```php
-<?php
-...
-public function registerBundles()
-{
-    $bundles = array(
-        ...
-        new Gregwar\ImageBundle\GregwarImageBundle(),
-        ...
-    );
-...
-```
-
-### Step 4: Configure the bundle and set up the directories
+### Step 2: Configure the bundle and set up the directories
 
 Adds the following configuration to your `app/config/config.yml`:
 
