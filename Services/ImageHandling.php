@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\KernelInterface;
  * @author Gregwar <g.passault@gmail.com>
  * @author Sullivan Senechal <soullivaneuh@gmail.com>
  */
-class ImageHandling
+class ImageHandling implements ImageHandlingInterface
 {
     /**
      * @var string
