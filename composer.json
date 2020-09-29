@@ -1,9 +1,9 @@
 {
-    "name": "arkounay/gregwar-image-bundle",
+    "name": "gregwar/image-bundle",
     "type": "symfony-bundle",
     "description": "Image handling bundle",
     "keywords": ["symfony", "image"],
-    "homepage": "https://github.com/Arkounay/GregwarImageBundleSf4",
+    "homepage": "https://github.com/Gregwar/ImageBundle",
     "license": "MIT",
     "authors": [
         {
@@ -15,8 +15,9 @@
     "require": {
         "php": ">=5.3.3",
         "ext-gd": "*",
-        "symfony/framework-bundle": "^2.3 || ^3.0 || ^4.0",
-        "twig/twig": "^1.12 || ^2.0",
+        "symfony/framework-bundle": "^2.3 || ^3.0 || ^4.0 || ^5.0",
+        "symfony/asset": "*",
+        "twig/twig": "^2.0 || ^3.0",
         "gregwar/image": "2.*"
     },
     "require-dev": {

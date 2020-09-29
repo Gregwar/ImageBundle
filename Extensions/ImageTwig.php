@@ -3,6 +3,8 @@
 namespace Gregwar\ImageBundle\Extensions;
 
 use Gregwar\ImageBundle\Services\ImageHandling;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
 /**
  * ImageTwig extension.
@@ -10,7 +12,7 @@ use Gregwar\ImageBundle\Services\ImageHandling;
  * @author Gregwar <g.passault@gmail.com>
  * @author bzikarsky <benjamin.zikarsky@perbility.de>
  */
-class ImageTwig extends \Twig_Extension
+class ImageTwig extends AbstractExtension
 {
     /**
      * @var ImageHandling
@@ -38,9 +40,9 @@ class ImageTwig extends \Twig_Extension
     public function getFunctions()
     {
         return array(
-            new \Twig_SimpleFunction('image', array($this, 'image'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('new_image', array($this, 'newImage'), array('is_safe' => array('html'))),
-            new \Twig_SimpleFunction('web_image', array($this, 'webImage'), array('is_safe' => array('html'))),
+            new TwigFunction('image', array($this, 'image'), array('is_safe' => array('html'))),
+            new TwigFunction('new_image', array($this, 'newImage'), array('is_safe' => array('html'))),
+            new TwigFunction('web_image', array($this, 'webImage'), array('is_safe' => array('html'))),
         );
     }
 
