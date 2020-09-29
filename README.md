@@ -1,7 +1,4 @@
-Update: [Gregwar's Image Bundle](https://github.com/Gregwar/ImageBundle) is now compatible with Symfony 4, so use it instead
-=====================
-
-# This is a fork of [Gregwar's Image Bundle](https://github.com/Gregwar/ImageBundle) working with Symfony 4 and composer:
+# This is a fork of [Gregwar's Image Bundle](https://github.com/Gregwar/ImageBundle) working with Symfony 5 and composer:
 
     composer require arkounay/gregwar-image-bundle
 
