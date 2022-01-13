@@ -1,4 +1,4 @@
-# This is a fork of [Gregwar's Image Bundle](https://github.com/Gregwar/ImageBundle) working with Symfony 5 and composer:
+# This is a fork of [Gregwar's Image Bundle](https://github.com/Gregwar/ImageBundle) working with Symfony 5/6 and composer:
 
     composer require arkounay/gregwar-image-bundle
 
