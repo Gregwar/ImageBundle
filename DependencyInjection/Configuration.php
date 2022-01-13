@@ -14,7 +14,7 @@ use Symfony\Component\HttpKernel\Kernel;
 
 class Configuration implements ConfigurationInterface
 {
-    public function getConfigTreeBuilder()
+    public function getConfigTreeBuilder(): TreeBuilder
     {
         $treeBuilder = new TreeBuilder('gregwar_image');
         $rootNode = method_exists(TreeBuilder::class, 'getRootNode') ?
