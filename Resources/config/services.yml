@@ -18,6 +18,8 @@ services:
           - '%gregwar_image.throw_exception%'
           - '%gregwar_image.fallback_image%'
 
+    Gregwar\ImageBundle\Services\ImageHandlingInterface: '@image.handling'
+
     # Helper Twig
     twig.extension.image:
         class: Gregwar\ImageBundle\Extensions\ImageTwig
