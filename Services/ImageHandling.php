@@ -52,6 +52,11 @@ class ImageHandling
     private $throwException;
 
     /**
+     * @var string
+     */
+    private $fallbackImage;
+
+    /**
      * @param string                               $cacheDirectory
      * @param int                                  $cacheDirMode
      * @param string                               $handlerClass
